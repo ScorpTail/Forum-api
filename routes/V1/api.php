@@ -26,7 +26,7 @@ Route::group(['as' => 'auth.', 'controller' => AuthController::class], function 
 Route::group(['prefix' => 'personal-access-token', 'as' => 'token.', 'controller' => PersonalAccessTokenController::class], function () {
     Route::post('/', 'createToken')->name('createToken');
 
-    Route::post('/destroy', 'destroyToken')->name('createToken')->middleware('auth:sanctum');
+    Route::post('/destroy', 'destroyToken')->name('destroyToken')->middleware('auth:sanctum');
 });
 
 Route::group(['prefix' => '/auth/{provider}', 'as' => 'socialite.', 'controller' => ProviderSocialiteController::class], function () {

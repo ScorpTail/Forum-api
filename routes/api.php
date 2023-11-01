@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::get('/', function () {
     return ["sanya" => "lox->GitHub Actions"];
+});
+
+Route::get('/auth/{provider}', function ($provider) {
+    return Socialite::driver($provider)->stateless()->redirect();
+});
+Route::get('/auth/{provider}/callback', function ($provider) {
+    $user = Socialite::driver($provider)->stateless()->user();
+
+    dd($user->getName(), $user->getEmail(), $user->getId(), $user->getNickname(), $user->getAvatar());
 });

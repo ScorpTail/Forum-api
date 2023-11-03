@@ -26,12 +26,12 @@ class AuthController extends Controller
         $user = $request->validated();
 
         if (!Auth::attempt($user)) {
-            return response(['message' => 'Failed authentication'], 401);
+            return response(['message' => 'Failed authentication'], Response::HTTP_UNAUTHORIZED);
         }
 
         $user['token'] = Auth::user()->createToken('accesToken')->plainTextToken;
 
-        return response(['message' => 'Success authentication', 'user' => $user], Response::HTTP_CREATED);
+        return response(['message' => 'Success authentication', 'user' => $user], Response::HTTP_OK);
     }
 
     public function logout(Request $request)

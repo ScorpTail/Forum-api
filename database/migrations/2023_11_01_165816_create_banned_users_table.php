@@ -14,11 +14,10 @@ return new class extends Migration
     {
         Schema::create('banned_users', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class, 'user_id');
             $table->string('reason');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-
-            $table->foreignIdFor(User::class, 'user_id');
         });
     }
 

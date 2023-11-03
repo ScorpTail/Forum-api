@@ -2,25 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Comment extends Model
+class Upvote extends Model
 {
     use HasFactory;
+    protected $table = 'upvotes';
 
-    protected $table = 'comments';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'user_id',
         'post_id',
-        'comment',
+        'liked',
     ];
 
     public function post(): BelongsTo

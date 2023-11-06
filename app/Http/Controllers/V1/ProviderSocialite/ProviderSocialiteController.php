@@ -2,36 +2,31 @@
 
 namespace App\Http\Controllers\V1\ProviderSocialite;
 
-use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
-use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\Controller;
+use App\Services\V1\ProviderSocialiteServices\ProviderSocialiteService;
 
 class ProviderSocialiteController extends Controller
 {
+    private ProviderSocialiteService $providerSocialiteService;
+
+    public function __construct(ProviderSocialiteService $providerSocialiteService)
+    {
+        $this->providerSocialiteService = $providerSocialiteService;
+    }
+
     public function redirectProvider(string $provider)
     {
-        return Socialite::driver($provider)->redirect();
+        return $this->providerSocialiteService->getRedirectProvider($provider);
     }
 
     public function callbackProvider(string $provider)
     {
-        if ($provider == 'google') {
-            $socialUser = Socialite::driver($provider)->stateless()->user();
-        } else {
-            $socialUser = Socialite::driver($provider)->user();
-        }
+        $socialUser = $this->providerSocialiteService->getUserProviderDriver($provider);
 
-        $user = User::updateOrCreate([
-            'provider_id' => $socialUser->id,
-            'provider' => $provider,
-        ], [
-            'name' => $socialUser->name,
-            'email' => $socialUser->email,
-            'provider_token' => $socialUser->token,
-        ]);
+        $user = $this->providerSocialiteService->createOrUpdateUser($provider, $socialUser);
 
-        return response(['message' => 'Success', 'userToken' => $user->token], Response::HTTP_OK);
+        return response()->json(['message' => 'Success', 'userToken' => $user->token], Response::HTTP_OK);
 
         //dd($user->getName(), $user->getEmail(), $user->getId(), $user->getNickname(), $user->getAvatar());
     }

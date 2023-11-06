@@ -3,47 +3,44 @@
 namespace App\Http\Controllers\V1\Auth;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Services\V1\Contracts\AuthServiceInterface;
 
 class AuthController extends Controller
 {
+
+    public function __construct(private AuthServiceInterface $authService)
+    {
+    }
+
     public function register(RegisterRequest $request)
     {
-        $registered = $request->validated();
+        $registeredData = $request->validated();
 
-        $user = User::create($registered);
+        User::create($registeredData);
 
-        return response(['message' => 'Success registration', 'user' => $user], Response::HTTP_CREATED);
+        $token = $this->authService->createTokenForUser($registeredData);
+
+        return response()->json(['message' => 'Success registration', 'token' => $token], Response::HTTP_CREATED);
     }
 
     public function login(LoginRequest $request)
     {
-        $user = $request->validated();
+        $data = $request->validated();
 
-        if (!Auth::attempt($user)) {
-            return response(['message' => 'Failed authentication'], Response::HTTP_UNAUTHORIZED);
-        }
+        $token = $this->authService->createTokenForUser($data);
 
-        $user['token'] = Auth::user()->createToken('accesToken')->plainTextToken;
-
-        return response(['message' => 'Success authentication', 'user' => $user], Response::HTTP_OK);
+        return response()->json(['message' => 'Success authentication', 'token' => $token], Response::HTTP_OK);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        if (!Auth::user()) {
-            return response(['message' => 'Unauthentication', Response::HTTP_UNAUTHORIZED]);
-        }
+        Auth::user()->tokens()->delete();
 
-        Auth::logout();
-
-        $request->user()->tokens()->delete();
-
-        return response()->noConte();
+        return response()->json()->noContent();
     }
 }

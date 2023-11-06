@@ -17,19 +17,24 @@ use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
 */
 
 Route::group(['as' => 'auth.', 'controller' => AuthController::class], function () {
-    Route::post('/register', 'register')->middleware('guest')->name('register');
-    Route::post('/login', 'login')->middleware('guest')->name('login');
+
+    Route::post('/register', 'register')->middleware('guest:sanctum')->name('register');
+
+    Route::post('/login', 'login')->middleware('guest:sanctum')->name('login');
 
     Route::post('/logout', 'logout')->middleware(['auth:sanctum'])->name('logout');
 });
 
+Route::group(['prefix' => '/auth/{provider}', 'as' => 'socialite.', 'controller' => ProviderSocialiteController::class], function () {
+
+    Route::get('/', 'redirectProvider')->name('redirect');
+
+    Route::get('/callback', 'callbackProvider')->name('callback');
+});
+
 Route::group(['prefix' => 'personal-access-token', 'as' => 'token.', 'controller' => PersonalAccessTokenController::class], function () {
+
     Route::post('/', 'createToken')->name('createToken');
 
     Route::post('/destroy', 'destroyToken')->name('destroyToken')->middleware('auth:sanctum');
-});
-
-Route::group(['prefix' => '/auth/{provider}', 'as' => 'socialite.', 'controller' => ProviderSocialiteController::class], function () {
-    Route::get('/', 'redirectProvider')->name('redirect');
-    Route::get('/callback', 'callbackProvider')->name('callback');
 });

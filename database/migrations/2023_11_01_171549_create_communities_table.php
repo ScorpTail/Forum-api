@@ -1,7 +1,8 @@
 <?php
 
-use App\Models\Categories;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +17,7 @@ return new class extends Migration
         Schema::create('communities', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id')->comment('Avtor of community');
-            $table->foreignIdFor(Categories::class, 'category_id');
+            $table->foreignIdFor(Category::class, 'category_id');
             $table->string('name');
             $table->text('description');
             $table->string('type')->comment('Public or private');

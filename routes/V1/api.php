@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\V1\Auth\AuthController;
+use App\Http\Controllers\V1\Admin\Role\RoleController;
 use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
+use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+
 
 Route::group(['as' => 'auth.', 'controller' => AuthController::class], function () {
 

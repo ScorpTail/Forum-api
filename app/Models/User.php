@@ -57,7 +57,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function isBanned(): Bool
+    public function isAdmin(): bool
+    {
+        return $this->role()->where('name', Role::ADMIN)->exists();
+    }
+
+    public function isBanned(): bool
     {
         return $this->bannedUser()->exists();
     }

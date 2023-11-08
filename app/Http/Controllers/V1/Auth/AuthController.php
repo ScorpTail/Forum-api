@@ -8,12 +8,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Services\V1\Contracts\AuthServiceInterface;
+use App\Services\V1\AuthServices\AuthService;
 
 class AuthController extends Controller
 {
 
-    public function __construct(private AuthServiceInterface $authService)
+    public function __construct(private AuthService $authService)
     {
     }
 

@@ -10,6 +10,10 @@ class Role extends Model
 {
     use HasFactory;
 
+    public const ADMIN = 'admin';
+    public const MODERATOR = 'moderator';
+    public const USER = 'user';
+
     protected $table = 'roles';
 
     /**

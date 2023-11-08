@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\V1\Admin\BannedUser;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BannedUser\StoreBannedUserRequest;
+use App\Http\Requests\BannedUser\UpdateBannedUserRequest;
 use App\Models\BannedUser;
-use Illuminate\Http\Request;
 
 class BannedUserController extends Controller
 {
@@ -19,7 +20,7 @@ class BannedUserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBannedUserRequest $request)
     {
         //
     }
@@ -27,7 +28,7 @@ class BannedUserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BannedUser $bannedUser)
+    public function show(banneduser $bannedUser)
     {
         //
     }
@@ -35,7 +36,7 @@ class BannedUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BannedUser $bannedUser)
+    public function update(UpdateBannedUserRequest $request, BannedUser $bannedUser)
     {
         //
     }

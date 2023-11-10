@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Admin\Permission;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Permission\StorePermissionRequest;
 use App\Http\Requests\Permission\UpdatePermissionRequest;
+use App\Http\Resources\V1\Admin\Permission\PermissionResource;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
+        return PermissionResource::collection(Permission::all());
     }
 
     /**
@@ -23,7 +24,7 @@ class PermissionController extends Controller
      */
     public function store(StorePermissionRequest $request)
     {
-        //
+        return PermissionResource::make(Permission::create($request->validated()));
     }
 
     /**
@@ -31,7 +32,7 @@ class PermissionController extends Controller
      */
     public function show(Permission $permission)
     {
-        //
+        return PermissionResource::make($permission);
     }
 
     /**
@@ -39,7 +40,7 @@ class PermissionController extends Controller
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        //
+        return PermissionResource::make($permission->update($request->validated()));
     }
 
     /**
@@ -47,6 +48,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        $permission->delete();
+        return response()->noContent();
     }
 }

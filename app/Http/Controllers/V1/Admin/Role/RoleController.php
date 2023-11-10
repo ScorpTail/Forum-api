@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\V1\Admin\Role;
 
+use App\Models\Role;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\StoreRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
-use App\Http\Resources\V1\Admin\Role\RoleCollection;
 use App\Http\Resources\V1\Admin\Role\RoleResource;
-use App\Models\Role;
+use App\Http\Resources\V1\Admin\Role\RoleCollection;
 
 class RoleController extends Controller
 {

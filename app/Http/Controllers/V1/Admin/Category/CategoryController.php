@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
-
+use App\Http\Resources\V1\Admin\Category\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return CategoryResource::collection(Category::all());
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        return CategoryResource::make(Category::create($request->validated()));
     }
 
     /**
@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return CategoryResource::make($category);
     }
 
     /**
@@ -39,7 +39,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        return CategoryResource::make($category->update($request->validated()));
     }
 
     /**
@@ -47,6 +47,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return response()->noContent();
     }
 }

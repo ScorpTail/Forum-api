@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\V1\Admin\User\UserResource;
 use App\Models\User;
 
 class UserController extends Controller
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return UserResource::collection(User::all());
     }
 
     /**
@@ -22,7 +23,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        return UserResource::collection(User::create($request->validated()));
     }
 
     /**
@@ -30,7 +31,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return UserResource::make($user);
     }
 
     /**
@@ -38,7 +39,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        return UserResource::make($user->update($request->validated()));
     }
 
     /**
@@ -46,6 +47,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->noContent();
     }
 }

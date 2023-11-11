@@ -5,6 +5,7 @@ use App\Http\Controllers\V1\Auth\AuthController;
 use App\Http\Controllers\V1\Admin\Role\RoleController;
 use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
 use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
+use App\Http\Controllers\V1\User\Post\PostController;
 
 /*
 |--------------------------------------------------------------------------

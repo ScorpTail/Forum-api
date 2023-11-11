@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Permission;
+namespace App\Http\Requests\Admin\Community;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePermissionRequest extends FormRequest
+class UpdateCommunityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

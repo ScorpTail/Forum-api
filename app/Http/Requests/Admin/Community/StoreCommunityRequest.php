@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Admin\Community;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class StoreCommunityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

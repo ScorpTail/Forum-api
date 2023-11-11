@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\V1\Admin\Community;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Community\StoreCommunityRequest;
-use App\Http\Requests\Community\UpdateCommunityRequest;
+use App\Http\Requests\Admin\Community\StoreCommunityRequest;
+use App\Http\Requests\Admin\Community\UpdateCommunityRequest;
 use App\Http\Resources\V1\Admin\Community\CommunityResource;
 use App\Models\Community;
 

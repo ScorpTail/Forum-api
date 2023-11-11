@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -12,10 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('permissions', function (Blueprint $table) {
+        Schema::create('role_permission', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->timestamps();
+            $table->foreignIdFor(Role::class);
+            $table->foreignIdFor(Permission::class);
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('role_permission');
     }
 };

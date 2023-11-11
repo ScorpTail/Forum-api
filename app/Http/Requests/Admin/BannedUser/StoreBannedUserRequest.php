@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Permission;
+namespace App\Http\Requests\Admin\BannedUser;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePermissionRequest extends FormRequest
+class StoreBannedUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**

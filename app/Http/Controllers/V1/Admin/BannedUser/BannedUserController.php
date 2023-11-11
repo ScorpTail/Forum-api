@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\V1\Admin\BannedUser;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BannedUser\StoreBannedUserRequest;
-use App\Http\Requests\BannedUser\UpdateBannedUserRequest;
+use App\Http\Requests\Admin\BannedUser\StoreBannedUserRequest;
+use App\Http\Requests\Admin\BannedUser\UpdateBannedUserRequest;
 use App\Http\Resources\V1\Admin\BannedUser\BannedUserResource;
 use App\Models\BannedUser;
 

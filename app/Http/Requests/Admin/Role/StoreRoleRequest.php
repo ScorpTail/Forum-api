@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Post;
+namespace App\Http\Requests\Admin\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePostRequest extends FormRequest
+class StoreRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'permissions' => ['nullable', 'array'],
+            'permission' => ['string', 'exists:permissions,name']
         ];
     }
 }

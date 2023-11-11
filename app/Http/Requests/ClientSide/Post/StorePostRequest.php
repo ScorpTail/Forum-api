@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\BannedUser;
+namespace App\Http\Requests\ClientSide\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBannedUserRequest extends FormRequest
+class StorePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

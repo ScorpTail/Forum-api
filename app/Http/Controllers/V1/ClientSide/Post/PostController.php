@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\V1\Admin\Post;
+namespace App\Http\Controllers\V1\ClientSide\Post;
 
-use App\Models\Post;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Post\StorePostRequest;
-use App\Http\Requests\Admin\Post\UpdatePostRequest;
-use App\Http\Resources\V1\Admin\Post\PostResource;
+use App\Models\Post;
+use App\Http\Requests\ClientSide\Post\StorePostRequest;
+use App\Http\Requests\ClientSide\Post\UpdatePostRequest;
 
 class PostController extends Controller
 {
@@ -15,7 +14,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        return PostResource::collection(Post::all());
     }
 
     /**
@@ -23,7 +21,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        return PostResource::make(Post::create($request->validated()));
+        //
     }
 
     /**
@@ -31,7 +29,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return PostResource::make($post);
+        //
     }
 
     /**
@@ -39,7 +37,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        return PostResource::make($post->update($request->validated()));
+        //
     }
 
     /**
@@ -47,7 +45,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
-        return response()->noContent();
+        //
     }
 }

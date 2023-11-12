@@ -9,12 +9,16 @@ use App\Http\Controllers\V1\Admin\BannedUser\BannedUserController;
 use App\Http\Controllers\V1\Admin\Community\CommunityController;
 use App\Http\Controllers\V1\Admin\Permission\PermissionController;
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource('banned', BannedUserController::class);
-    Route::apiResource('category', CategoryController::class);
-    Route::apiResource('community', CommunityController::class);
-    Route::apiResource('permission', PermissionController::class);
-    Route::apiResource('post', PostController::class);
-    Route::apiResource('role', RoleController::class);
-    Route::apiResource('user', UserController::class)->except(['store','update']);
-});
+Route::apiResource('banned', BannedUserController::class);
+
+Route::apiResource('category', CategoryController::class);
+
+Route::apiResource('community', CommunityController::class);
+
+Route::apiResource('permission', PermissionController::class);
+
+Route::apiResource('post', PostController::class);
+
+Route::apiResource('role', RoleController::class);
+
+Route::apiResource('user', UserController::class)->except(['store', 'update']);

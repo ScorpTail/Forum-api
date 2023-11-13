@@ -14,7 +14,8 @@ use App\Http\Resources\V1\ClientSide\Post\PostCollection;
 class PostController extends Controller
 {
     public function __construct(private ClientSideService $clientSideService)
-    {}
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -29,7 +30,8 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        return $this->clientSideService->storePost($request);
+        $this->clientSideService->storePost($request);
+        return response()->json(['message' => 'Created success', Response::HTTP_CREATED]);
     }
 
     /**
@@ -45,14 +47,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $validatedData = $request->validated();
-
-        if ($request->has('image')) {
-            $validatedData['image'] = '/storage/' . Storage::disk('public')->put('/post', $validatedData['image']);
-        }
-
-        $post->update($validatedData);
-
+        $this->clientSideService->updatePost($request, $post);
         return response()->json(['message' => 'Update success', Response::HTTP_CREATED]);
     }
 

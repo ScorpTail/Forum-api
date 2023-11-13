@@ -10,15 +10,31 @@ class ClientSideService
 {
     public function storePost($request)
     {
+        $validatedData = $this->validationData($request);
+
+        return Post::create($validatedData);
+    }
+    public function updatePost($request, $post)
+    {
+        $validatedData = $this->validationData($request);
+
+        return $post->update($validatedData);
+    }
+
+    private function validationData($request)
+    {
         $validatedData = $request->validated();
 
         if ($request->has('image')) {
-            $validatedData['image'] = '/storage/' . Storage::disk('public')->put('/post', $validatedData['image']);
+            $validatedData['image'] = $this->storeImage($request->file('image'));
         }
-        dd(123);
 
-        Post::create($validatedData);
+        return $validatedData;
+    }
 
-        return response()->json(['message' => 'Created success', Response::HTTP_CREATED]);
+    private function storeImage($image)
+    {
+
+        return '/storage/' . $image->store('/post', 'public');
     }
 }

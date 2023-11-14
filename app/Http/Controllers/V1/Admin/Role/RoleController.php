@@ -27,15 +27,11 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
-        $validatedData = $request->validated();
+        $role = Role::create($request->validated('name'));
 
-        $permissions = $validatedData['permissions'];
-
-        unset($validatedData['permissions']);
-
-        $role = Role::create($validatedData);
-
-        $role->permissions()->attach($permissions);
+        optional($request->validated('permissions'))->each(function ($permissions) use ($role) {
+            $role->permissions()->attach($permissions);
+        });
 
         return new RoleResource($role);
     }
@@ -53,15 +49,16 @@ class RoleController extends Controller
      */
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $validatedData = $request->validated();
+        $role->update(array($request->validated('name')));
 
-        $permissions = $validatedData['permisiions'];
+        // if ($request->has('permissions')) {
+        //     $role->permissions()->sync($request->validated('permissions'));
+        // }
 
-        unset($validatedData['permissions']);
+        optional($request->validated('permissions'))->each(function ($permissions) use ($role) {
+            $role->permissions()->sync($permissions);
+        });
 
-        $role->update($validatedData);
-
-        $role->permissions()->sync($permissions);
 
         return response()->noContent();
     }
@@ -71,6 +68,7 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        $role->permissions()->detach();
         $role->delete();
         return response()->noContent();
     }

@@ -10,12 +10,8 @@ use App\Services\V1\TokenServices\PersonalAccessTokenService;
 
 class PersonalAccessTokenController extends Controller
 {
-    private PersonalAccessTokenService $personalAccessTokenService;
-
-    public function __construct(PersonalAccessTokenService $personalAccessTokenService)
-    {
-        $this->personalAccessTokenService = $personalAccessTokenService;
-    }
+    public function __construct(private PersonalAccessTokenService $personalAccessTokenService)
+    {}
 
     public function createToken(CreateTokenRequest $request)
     {

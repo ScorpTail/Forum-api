@@ -8,12 +8,8 @@ use App\Services\V1\ProviderSocialiteServices\ProviderSocialiteService;
 
 class ProviderSocialiteController extends Controller
 {
-    private ProviderSocialiteService $providerSocialiteService;
-
-    public function __construct(ProviderSocialiteService $providerSocialiteService)
-    {
-        $this->providerSocialiteService = $providerSocialiteService;
-    }
+    public function __construct(private ProviderSocialiteService $providerSocialiteService)
+    {}
 
     public function redirectProvider(string $provider)
     {

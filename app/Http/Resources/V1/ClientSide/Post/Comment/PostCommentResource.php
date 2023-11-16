@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\V1\ClientSide\Post;
+namespace App\Http\Resources\V1\ClientSide\Post\Comment;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostResource extends JsonResource
+class PostCommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,7 @@ class PostResource extends JsonResource
     {
         return [
             'user_id' => $this->user_id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'image' => $this->image,
-            'created_at' => $this->created_at,
+            'comment' => $this->comment,
 
             'comment_upvotes' => $this->upvotes->where('upvote', 1)->count(),
             'comment_downvotes' => $this->upvotes->where('upvote', 0)->count(),

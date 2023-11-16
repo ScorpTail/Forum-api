@@ -18,8 +18,6 @@ use App\Http\Controllers\V1\User\Post\PostController;
 |
 */
 
-
-
 Route::group(['as' => 'auth.', 'controller' => AuthController::class], function () {
 
     Route::post('/register', 'register')->middleware('guest:sanctum')->name('register');
@@ -40,5 +38,5 @@ Route::group(['prefix' => 'personal-access-token', 'as' => 'token.', 'controller
 
     Route::post('/', 'createToken')->name('createToken');
 
-    Route::post('/destroy', 'destroyToken')->name('destroyToken')->middleware('auth:sanctum');
+    Route::delete('/destroy', 'destroyToken')->name('destroyToken')->middleware('auth:sanctum');
 });

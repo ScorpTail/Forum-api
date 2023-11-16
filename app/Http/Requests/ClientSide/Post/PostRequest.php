@@ -23,8 +23,8 @@ class PostRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'image' => ['sometimes', 'image', 'max:8192'],
-            'description' => ['sometimes', 'string'],
+            'image' => ['sometimes', 'image', 'max:8192', 'required_if:description,null'],
+            'description' => ['sometimes', 'string', 'required_if:image,null'],
         ];
     }
 
@@ -35,12 +35,15 @@ class PostRequest extends FormRequest
             $hasImage = $this->has('image');
             $hasDescription = $this->has('description');
 
-            if ($hasTitle && $hasImage && $hasDescription) {
-                $validator->errors()->add('field combination', 'Invalid combination of fields');
+            $presentFields = [$hasTitle, $hasImage, $hasDescription];
+            $countPresentFields = count(array_filter($presentFields));
+
+            if ($countPresentFields < 2) {
+                $validator->errors()->add('Invalid request', "At least two fields are required, including 'title'.");
             }
 
-            if ($hasTitle && !$hasImage && !$hasDescription) {
-                $validator->errors()->add('Invalid request', 'Required two fields, present one');
+            if ($countPresentFields > 2) {
+                $validator->errors()->add('Invalid request', 'Only two fields are allowed.');
             }
         });
     }

@@ -26,7 +26,7 @@ class Post extends Model
     }
     public function upvotes(): HasMany
     {
-        return $this->hasMany(Upvote::class, 'post_id', 'id');
+        return $this->hasMany(PostUpvote::class, 'post_id', 'id');
     }
 
     public function comments(): HasMany

@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function upvotes(): HasMany
     {
-        return $this->hasMany(Upvote::class, 'user_id', 'id');
+        return $this->hasMany(PostUpvote::class, 'user_id', 'id');
     }
 
     public function comments(): HasMany

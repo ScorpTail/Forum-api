@@ -11,6 +11,7 @@ class ClientSideService
     public function storePost($request)
     {
         $validatedData = $this->validationData($request);
+        $validatedData['user_id'] = 1;
 
         return Post::create($validatedData);
     }

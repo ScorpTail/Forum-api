@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('upvotes', function (Blueprint $table) {
+        Schema::create('comment_upvotes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'user_id');
-            $table->foreignIdFor(Post::class, 'post_id')->cascadeOnDelete();
-            $table->boolean('liked')->nullable();
-
+            $table->foreignIdFor(Comment::class);
+            $table->foreignIdFor(User::class);
+            $table->boolean('upvote')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('upvotes');
+        Schema::dropIfExists('comment_upvotes');
     }
 };

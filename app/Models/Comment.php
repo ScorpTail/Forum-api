@@ -19,6 +19,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'comment',
     ];
 
@@ -29,7 +30,7 @@ class Comment extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function upvotes(): HasMany

@@ -4,9 +4,10 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Http\Controllers\V1\ClientSide\Post\PostCommentController;
 use App\Models\Comment;
+use App\Policies\V1\PostPolicy;
 use App\Policies\V1\PostCommentPolicy;
+use App\Http\Controllers\V1\ClientSide\Post\PostCommentController;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -18,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Comment::class => PostCommentPolicy::class,
+        Post::class => PostPolicy::class,
     ];
 
     /**

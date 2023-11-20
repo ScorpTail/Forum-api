@@ -28,7 +28,7 @@ class PostCommentController extends Controller
     {
         $validated = $request->validated();
 
-        $validated['user_id'] = $request->user()->id ?? 1;
+        $validated['user_id'] = $request->user()->id;
 
         $post->comments()->create($validated);
 
@@ -40,7 +40,7 @@ class PostCommentController extends Controller
      */
     public function update(PostCommentRequest $request, Post $post, Comment $comment)
     {
-        //$this->authorize('update', $comment);
+        $this->authorize('update', $comment);
 
         $validated = $request->validated();
 
@@ -54,7 +54,9 @@ class PostCommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
-        //$this->authorize('delete', $comment);
+        $this->authorize('delete', $comment);
+
+        $comment->upvotes()->delete();
 
         $comment->delete();
 
@@ -63,6 +65,8 @@ class PostCommentController extends Controller
 
     public function upvote(UpvoteRequest $request, Post $post, Comment $comment)
     {
+        $this->authorize('upvote', $comment);
+
         $upvote = $request->validated();
 
         $upvote['user_id'] = $request->user()->id ?? 1;

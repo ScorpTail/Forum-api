@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\ClientSide\Post;
 use App\Models\Post;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientSide\Post\PostRequest;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
 use App\Http\Resources\V1\ClientSide\Post\PostResource;
@@ -29,6 +30,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $this->authorize('store');
         $this->clientSideService->storePost($request);
         return response()->json(['message' => 'Created success'], Response::HTTP_CREATED);
     }
@@ -46,6 +48,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
         $this->clientSideService->updatePost($request, $post);
         return response()->json(['message' => 'Update success'], Response::HTTP_CREATED);
     }
@@ -55,18 +58,24 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $post->delete();
+        $this->authorize('destroy', $post);
 
-        $post->comments()->detach();
+        $post->comments()->delete();
+
+        $post->upvotes()->delete();
+
+        $post->delete();
 
         return response()->noContent();
     }
 
     public function upvote(UpvoteRequest $request, Post $post)
     {
+        $this->authorize('upvote', $post);
+
         $upvote = $request->validated();
 
-        $upvote['user_id'] = $request->user()->id ?? 1;
+        $upvote['user_id'] = $request->user()->id;
 
         $post->upvotes()->create($upvote);
 

@@ -22,4 +22,9 @@ class PostCommentPolicy
     {
         return $user->id === $comment->author->id || $user->isAdmin();
     }
+
+    public function upvote(User $user, Comment $comment)
+    {
+        return !$comment->upvotes->pluck('user_id')->contains($user->id);
+    }
 }

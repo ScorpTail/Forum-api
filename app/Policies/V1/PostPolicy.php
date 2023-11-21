@@ -5,7 +5,6 @@ namespace App\Policies\V1;
 use App\Models\Post;
 use App\Models\User;
 
-
 class PostPolicy
 {
     /**

@@ -69,7 +69,7 @@ class PostCommentController extends Controller
 
         $upvote = $request->validated();
 
-        $upvote['user_id'] = $request->user()->id ?? 1;
+        $upvote['user_id'] = $request->user()->id;
 
         $comment->upvotes()->create($upvote);
 

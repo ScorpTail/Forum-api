@@ -30,7 +30,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $this->authorize('store');
+        $this->authorize('store', Post::class);
         $this->clientSideService->storePost($request);
         return response()->json(['message' => 'Created success'], Response::HTTP_CREATED);
     }

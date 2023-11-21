@@ -2,10 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\V1\Auth\AuthController;
-use App\Http\Controllers\V1\Admin\Role\RoleController;
 use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
 use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
-use App\Http\Controllers\V1\User\Post\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +25,12 @@ Route::group(['as' => 'auth.', 'controller' => AuthController::class], function 
     Route::post('/logout', 'logout')->middleware(['auth:sanctum'])->name('logout');
 });
 
-Route::group(['prefix' => '/auth/{provider}', 'as' => 'socialite.', 'controller' => ProviderSocialiteController::class], function () {
+Route::group([
+    'middleware' => ['guest:sanctum'],
+    'prefix' => '/auth/{provider}',
+    'as' => 'socialite.',
+    'controller' => ProviderSocialiteController::class,
+], function () {
 
     Route::get('/', 'redirectProvider')->name('redirect');
 

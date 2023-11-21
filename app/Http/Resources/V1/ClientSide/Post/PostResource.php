@@ -21,8 +21,10 @@ class PostResource extends JsonResource
             'image' => $this->image,
             'created_at' => $this->created_at,
 
-            'comment_upvotes' => $this->upvotes->where('upvote', 1)->count(),
-            'comment_downvotes' => $this->upvotes->where('upvote', 0)->count(),
+            'post_upvotes' => $this->upvotes->where('upvote', 1)->count(),
+            'post_downvotes' => $this->upvotes->where('upvote', 0)->count(),
+
+            'post_comments' => $this->comments->count(),
         ];
     }
 }

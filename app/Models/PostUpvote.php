@@ -7,15 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Upvote extends Model
+class PostUpvote extends Model
 {
     use HasFactory;
-    protected $table = 'upvotes';
+    protected $table = 'post_upvotes';
 
     protected $fillable = [
         'user_id',
         'post_id',
-        'liked',
+        'upvote',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'upvote' => 'boolean',
     ];
 
     public function post(): BelongsTo

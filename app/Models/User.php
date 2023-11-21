@@ -5,13 +5,14 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Community;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -67,6 +68,11 @@ class User extends Authenticatable
         return $this->bannedUser()->exists();
     }
 
+    public function isUserUpvoted(Model $model): bool
+    {
+        return $model->upvotes->contains('user_id', $this->id);
+    }
+
     public function communties(): BelongsToMany
     {
         return $this->belongsToMany(Community::class, 'user_communities', 'user_id', 'community_id');
@@ -84,7 +90,7 @@ class User extends Authenticatable
 
     public function upvotes(): HasMany
     {
-        return $this->hasMany(Upvote::class, 'user_id', 'id');
+        return $this->hasMany(PostUpvote::class, 'user_id', 'id');
     }
 
     public function comments(): HasMany

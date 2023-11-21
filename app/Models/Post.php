@@ -20,13 +20,13 @@ class Post extends Model
         'image',
     ];
 
-    public function user(): BelongsTo
+    public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
     public function upvotes(): HasMany
     {
-        return $this->hasMany(Upvote::class, 'post_id', 'id');
+        return $this->hasMany(PostUpvote::class, 'post_id', 'id');
     }
 
     public function comments(): HasMany

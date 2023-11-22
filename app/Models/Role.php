@@ -12,8 +12,11 @@ class Role extends Model
     use HasFactory;
 
     public const ADMIN = 'admin';
+    public const ADMIN_ID = 1;
     public const MODERATOR = 'moderator';
+    public const MODERATOR_ID = 2;
     public const USER = 'user';
+    public const USER_ID = 3;
 
     protected $table = 'roles';
 

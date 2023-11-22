@@ -11,7 +11,7 @@ class UserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['sometimes', 'string', 'max:30'],
+            'about' => ['sometimes', 'string', 'max:255'],
+            'avatar' => ['sometimes', 'image', 'max:4096', "mimes:png,jpg,jpeg"],
+            'baner' => ['sometimes', 'image', 'max:4096', 'mimes:png,jpg,jpeg'],
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\V1\Auth\AuthController;
+use App\Http\Controllers\V1\ClientSide\User\UserController;
 use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
 use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 
@@ -15,6 +16,8 @@ use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::apiSingleton('user/{user?}', UserController::class)->middleware('auth:sanctum');
 
 Route::group(['as' => 'auth.', 'controller' => AuthController::class], function () {
 

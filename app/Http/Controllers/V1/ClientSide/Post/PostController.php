@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ClientSide\Post\PostRequest;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
 use App\Http\Resources\V1\ClientSide\Post\PostResource;
-use App\Services\V1\ClinetSideService\ClientSideService;
+use App\Services\V1\ClinetSideService\PostClientSideService;
 
 class PostController extends Controller
 {
-    public function __construct(private ClientSideService $clientSideService)
+    public function __construct(private PostClientSideService $postClientSideService)
     {
     }
 
@@ -31,7 +31,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $this->authorize('store', Post::class);
-        $this->clientSideService->storePost($request);
+        $this->postClientSideService->storePost($request);
         return response()->json(['message' => 'Created success'], Response::HTTP_CREATED);
     }
 
@@ -49,7 +49,7 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {
         $this->authorize('update', $post);
-        $this->clientSideService->updatePost($request, $post);
+        $this->postClientSideService->updatePost($request, $post);
         return response()->json(['message' => 'Update success'], Response::HTTP_CREATED);
     }
 

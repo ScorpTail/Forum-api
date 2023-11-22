@@ -7,9 +7,10 @@ use App\Models\Post;
 class PostClientSideService
 {
 
-    private function __construct(private ClientSideService $clientSideService)
+    public function __construct(private ClientSideService $clientSideService)
     {
     }
+
     public function storePost($request)
     {
         $validatedData = $this->clientSideService->validationData($request);

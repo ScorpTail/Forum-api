@@ -73,7 +73,12 @@ class User extends Authenticatable
         return $model->upvotes->contains('user_id', $this->id);
     }
 
-    public function communties(): BelongsToMany
+    public function ownCommunities()
+    {
+        return $this->hasMany(Community::class, 'user_id', 'id');
+    }
+
+    public function subscribed(): BelongsToMany
     {
         return $this->belongsToMany(Community::class, 'user_communities', 'user_id', 'community_id');
     }

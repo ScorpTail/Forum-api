@@ -31,7 +31,9 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $this->authorize('store', Post::class);
+
         $this->postClientSideService->storePost($request);
+
         return response()->json(['message' => 'Created success'], Response::HTTP_CREATED);
     }
 
@@ -49,7 +51,9 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {
         $this->authorize('update', $post);
+
         $this->postClientSideService->updatePost($request, $post);
+
         return response()->json(['message' => 'Update success'], Response::HTTP_CREATED);
     }
 

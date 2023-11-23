@@ -22,8 +22,8 @@ class UserResource extends JsonResource
             'about' => $this->about,
             'created_at' => $this->created_at,
 
-            'communties_count' => $this->communties->count(),
-            'communties' => $this->communties,
+            'communties_count' => $this->subscribed->count(),
+            'communties' => $this->subscribed,
 
             'posts_count' => $this->posts->count(),
             'post' => $this->posts,

@@ -5,9 +5,15 @@ use App\Http\Controllers\V1\ClientSide\Post\PostController;
 use App\Http\Controllers\V1\ClientSide\Post\PostCommentController;
 use App\Http\Controllers\V1\ClientSide\Community\CommunityController;
 
-Route::post('post/{post}/upvote', [PostController::class, 'upvote'])->middleware(['auth:sanctum'])->name('post.upvote');
-Route::post('post', [PostController::class, 'store'])->middleware(['auth:sanctum'])->name('post.store');
-Route::post('post/{post}', [PostController::class, 'update'])->middleware(['auth:sanctum'])->name('post.update');
+Route::group([
+    'middleware' => ['auth:sanctum'],
+    'prefix' => 'post', 'as' => 'post.',
+    'controller' => PostController::class
+], function () {
+    Route::post('/{post}/upvote', 'upvote')->name('upvote');
+    Route::post('/{post}', 'update')->name('update');
+    Route::post('/', 'store')->name('store');
+});
 Route::apiResource('post', PostController::class)->except(['store', 'update']);
 
 
@@ -18,4 +24,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 
-Route::apiResource('community', CommunityController::class);
+
+Route::apiResource('community', CommunityController::class)->middleware(['auth:sanctum'])->except(['index', 'show']);
+Route::apiResource('community', CommunityController::class)->only(['index', 'show']);

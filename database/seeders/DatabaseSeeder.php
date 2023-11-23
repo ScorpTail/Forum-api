@@ -6,6 +6,10 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Database\Seeders\PostSeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\CommunitySeeder;
+use Database\Seeders\PermissionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +27,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => 'Password123', //Password123
             'about' => fake()->text(),
+        ]);
+
+        $this->call([
+            RoleSeeder::class,
+            PermissionSeeder::class,
+            PostSeeder::class,
+            CommunitySeeder::class,
         ]);
     }
 }

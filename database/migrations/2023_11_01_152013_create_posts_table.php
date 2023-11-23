@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Community;
 use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Community::class);
             $table->string('title');
             $table->text('description')->nullable();
             $table->text('image')->nullable();

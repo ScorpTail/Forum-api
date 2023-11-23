@@ -21,6 +21,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => 1,
+            'community_id' => 1,
             'title' => fake()->title(),
             'description' => fake()->text(),
         ];

@@ -11,10 +11,10 @@ class ProviderSocialiteService implements ProviderSocialiteServiceInterface
     public function getRedirectProvider(string $provider)
     {
         if ($provider === 'google') {
-            return Socialite::driver($provider)->stateless()->redirect();
+            return Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
         }
 
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->redirect()->getTargetUrl();
     }
     public function getUserProviderDriver(string $provider)
     {

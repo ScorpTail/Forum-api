@@ -9,7 +9,8 @@ use App\Services\V1\ProviderSocialiteServices\ProviderSocialiteService;
 class ProviderSocialiteController extends Controller
 {
     public function __construct(private ProviderSocialiteService $providerSocialiteService)
-    {}
+    {
+    }
 
     public function redirectProvider(string $provider)
     {

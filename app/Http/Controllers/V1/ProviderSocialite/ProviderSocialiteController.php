@@ -23,8 +23,8 @@ class ProviderSocialiteController extends Controller
 
         $user = $this->providerSocialiteService->createOrUpdateUser($provider, $socialUser);
 
-        return response()->json(['message' => 'Success', 'userToken' => $user->token], Response::HTTP_OK);
+        return response()->json(['message' => 'Success', 'userToken' => $user->provider_token], Response::HTTP_OK);
 
-        //dd($user->getName(), $user->getEmail(), $user->getId(), $user->getNickname(), $user->getAvatar());
+        //dd($socialUser->getName(), $socialUser->getEmail(), $socialUser->getId(), $socialUser->getNickname(), $socialUser->getAvatar());
     }
 }

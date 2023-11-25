@@ -2,6 +2,7 @@
 
 namespace App\Services\V1\AuthServices;
 
+use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Services\V1\Contracts\AuthServiceInterface;
@@ -24,5 +25,10 @@ class AuthService implements AuthServiceInterface
 
             return response()->json(['message' => 'Failed authentication'], Response::HTTP_UNAUTHORIZED);
         }
+    }
+
+    public function createuser($registeredData): User
+    {
+        return User::create($registeredData);
     }
 }

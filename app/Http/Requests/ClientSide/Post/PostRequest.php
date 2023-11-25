@@ -24,6 +24,7 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'user_id' => ['required', 'exists:users,id'],
             'community_id' => ['required_if:post,null', 'integer', 'exists:communities,id'],
             'title' => ['required', 'string'],
             'image' => ['sometimes', 'image', 'max:8192'], //, 'required_if:description,null'
@@ -50,5 +51,12 @@ class PostRequest extends FormRequest
                 $validator->errors()->add('Invalid request', 'Only three fields are allowed.');
             }
         });
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'user_id' => $this->user()->id,
+        ]);
     }
 }

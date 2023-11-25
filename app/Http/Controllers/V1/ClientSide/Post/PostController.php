@@ -64,11 +64,7 @@ class PostController extends Controller
     {
         $this->authorize('destroy', $post);
 
-        $post->comments()->delete();
-
-        $post->upvotes()->delete();
-
-        $post->delete();
+        $this->postClientSideService->destroyPost($post);
 
         return response()->noContent();
     }
@@ -77,11 +73,7 @@ class PostController extends Controller
     {
         $this->authorize('upvote', $post);
 
-        $upvote = $request->validated();
-
-        $upvote['user_id'] = $request->user()->id;
-
-        $post->upvotes()->create($upvote);
+        $this->postClientSideService->upvotePost($request, $post);
 
         return response()->noContent();
     }

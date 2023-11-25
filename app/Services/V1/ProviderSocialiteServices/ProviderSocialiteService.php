@@ -29,13 +29,16 @@ class ProviderSocialiteService implements ProviderSocialiteServiceInterface
     {
         return User::updateOrCreate(
             [
-                'provider_id' => $socialUser->id,
+                'provider_id' => $socialUser->getId(),
+                'email' => $socialUser->getEmail(),
                 'provider' => $provider,
             ],
             [
-                'name' => $socialUser->name,
-                'email' => $socialUser->email,
+                'name' => $socialUser->getName(),
+                'nickName' => $socialUser->getNickname(),
+                'avatar' => $socialUser->getAvatar(),
                 'provider_token' => $socialUser->token,
+                'provider_refresh_token' => $socialUser->refreshToken,
             ]
         );
     }

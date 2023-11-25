@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\V1\Auth;
 
-use App\Models\User;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\V1\AuthServices\AuthService;
@@ -21,7 +19,7 @@ class AuthController extends Controller
     {
         $registeredData = $request->validated();
 
-        User::create($registeredData);
+        $this->authService->createuser($registeredData);
 
         $token = $this->authService->createTokenForUser($registeredData);
 

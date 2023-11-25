@@ -8,11 +8,15 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientSide\Post\PostCommentRequest;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
-use App\Http\Resources\V1\ClientSide\Post\Comment\PostCommentCollection;
 use App\Http\Resources\V1\ClientSide\Post\Comment\PostCommentResource;
+use App\Services\V1\ClinetSideService\PostCommentClientService;
 
 class PostCommentController extends Controller
 {
+
+    public function __construct(private PostCommentClientService $postCommentClientService)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,11 +30,7 @@ class PostCommentController extends Controller
      */
     public function store(PostCommentRequest $request, Post $post)
     {
-        $validated = $request->validated();
-
-        $validated['user_id'] = $request->user()->id;
-
-        $post->comments()->create($validated);
+        $this->postCommentClientService->storeCommnet($request, $post);
 
         return response()->json(['message' => 'Success'], Response::HTTP_CREATED);
     }
@@ -42,9 +42,7 @@ class PostCommentController extends Controller
     {
         $this->authorize('update', $comment);
 
-        $validated = $request->validated();
-
-        $comment->update($validated);
+        $this->postCommentClientService->updateComment($request, $comment);
 
         return response()->json(['message' => 'Success'], Response::HTTP_CREATED);
     }
@@ -56,9 +54,7 @@ class PostCommentController extends Controller
     {
         $this->authorize('delete', $comment);
 
-        $comment->upvotes()->delete();
-
-        $comment->delete();
+        $this->postCommentClientService->destroyComment($comment);
 
         return response()->noContent();
     }
@@ -67,11 +63,7 @@ class PostCommentController extends Controller
     {
         $this->authorize('upvote', $comment);
 
-        $upvote = $request->validated();
-
-        $upvote['user_id'] = $request->user()->id;
-
-        $comment->upvotes()->create($upvote);
+        $this->postCommentClientService->upvoteForComment($request, $comment);
 
         return response()->noContent();
     }

@@ -64,4 +64,13 @@ class CommunityController extends Controller
 
         return response()->noContent();
     }
+
+    public function subscribe(Community $community)
+    {
+        auth()->user()->subscribed()->sync($community);
+    }
+    public function unsubscribe(Community $community)
+    {
+        auth()->user()->subscribed()->detach($community);
+    }
 }

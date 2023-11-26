@@ -24,6 +24,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 
-
-Route::apiResource('community', CommunityController::class)->middleware(['auth:sanctum'])->except(['index', 'show']);
+Route::group(['middleware' => ['auth:sanctum'], 'controller' => CommunityController::class], function () {
+    Route::post('community/{community}/subscribe', 'subscribe')->name('community.subscribe');
+    Route::post('community/{community}/unsubscribe', 'unsubscribe')->name('community.unsubscribe');
+    Route::apiResource('community', CommunityController::class)->except(['index', 'show']);
+});
 Route::apiResource('community', CommunityController::class)->only(['index', 'show']);

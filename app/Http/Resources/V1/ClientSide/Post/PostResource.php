@@ -17,11 +17,13 @@ class PostResource extends JsonResource
     {
         return [
             'post_id' => $this->id,
-            'user_id' => $this->user_id,
             'title' => $this->title,
             'description' => $this->description,
             'image' => $this->image,
             'created_at' => $this->created_at,
+
+            'user_id' => $this->user_id,
+            'user_name' => $this->author->name,
 
             'post_upvotes' => $this->upvotes->where('upvote', 1)->count() - $this->upvotes->where('upvote', 0)->count(),
 

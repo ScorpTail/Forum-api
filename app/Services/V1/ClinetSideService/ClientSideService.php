@@ -28,6 +28,6 @@ class ClientSideService
 
     private function storeImage($image)
     {
-        return '/storage/' . $image->store('/post', 'public');
+        return asset($image->store('post'));
     }
 }

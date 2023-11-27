@@ -27,7 +27,7 @@ class PostRequest extends FormRequest
             'user_id' => ['required', 'exists:users,id'],
             'community_id' => ['required_if:post,null', 'integer', 'exists:communities,id'],
             'title' => ['required', 'string'],
-            'image' => ['sometimes', 'image', 'max:8192'], //, 'required_if:description,null'
+            'image' => ['sometimes', 'image', 'max:8192', 'mimes:png,jpg,gif,jpeg,webp'], //, 'required_if:description,null'
             'description' => ['sometimes', 'string'], //, 'required_if:image,null'
         ];
     }

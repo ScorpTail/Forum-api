@@ -2,8 +2,6 @@
 
 namespace App\Services\V1\ClinetSideService;
 
-use App\Models\Post;
-
 class ClientSideService
 {
     public function validationData($request)

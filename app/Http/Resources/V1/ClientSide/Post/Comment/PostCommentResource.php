@@ -18,8 +18,7 @@ class PostCommentResource extends JsonResource
             'user_id' => $this->user_id,
             'comment' => $this->comment,
 
-            'comment_upvotes' => $this->upvotes->where('upvote', 1)->count(),
-            'comment_downvotes' => $this->upvotes->where('upvote', 0)->count(),
+            'comment_upvotes_count' => $this->upvotes->where('upvote', 1)->count() - $this->upvotes->where('upvote', 0)->count(),
         ];
     }
 }

@@ -22,14 +22,15 @@ class PostResource extends JsonResource
             'image' => $this->image,
             'created_at' => $this->created_at,
 
-            'user_id' => $this->user_id,
-            'user_name' => $this->author->name,
-
-            'post_upvotes' => $this->upvotes->where('upvote', 1)->count() - $this->upvotes->where('upvote', 0)->count(),
-
-            'post_comments' => $this->comments->count(),
-
-            'community' => new CommunityResource($this->community),
+            'user_info' => [
+                'user_id' => $this->user_id,
+                'user_name' => $this->author->name,
+            ],
+            'post_info' => [
+                'post_upvotes_count' => $this->upvotes->where('upvote', 1)->count() - $this->upvotes->where('upvote', 0)->count(),
+                'post_comments_count' => $this->comments->count(),
+            ],
+            'community_info' => new CommunityResource($this->community),
         ];
     }
 }

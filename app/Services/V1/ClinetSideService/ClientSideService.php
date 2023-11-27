@@ -2,8 +2,6 @@
 
 namespace App\Services\V1\ClinetSideService;
 
-use App\Models\Post;
-
 class ClientSideService
 {
     public function validationData($request)
@@ -28,6 +26,6 @@ class ClientSideService
 
     private function storeImage($image)
     {
-        return '/storage/' . $image->store('/post', 'public');
+        return asset($image->store('post'));
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\V1\ClientSide\User;
 
+use App\Http\Resources\V1\ClientSide\Community\CommunityResource;
+use App\Http\Resources\V1\ClientSide\Post\Comment\PostCommentResource;
+use App\Http\Resources\V1\ClientSide\Post\PostResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,13 +26,13 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
 
             'communties_count' => $this->subscribed->count(),
-            'communties' => $this->subscribed,
+            'communties' => CommunityResource::collection($this->subscribed),
 
             'posts_count' => $this->posts->count(),
-            'post' => $this->posts,
+            'post' => PostResource::collection($this->posts),
 
             'comments_count' => $this->comments->count(),
-            'comments' => $this->comments,
+            'comments' => PostCommentResource::collection($this->comments),
 
             'upvotes_count' => $this->upvotes->count(),
             'upvotes' => $this->upvotes,

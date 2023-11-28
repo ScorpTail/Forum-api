@@ -14,10 +14,15 @@ use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
-|
+|s
 */
 
-Route::apiSingleton('user/{user?}', UserController::class)->middleware('auth:sanctum');
+Route::group(['as.' => 'user.', 'prefix' => 'user/id/', 'controller' => UserController::class], function () {
+    Route::get('{user}', 'showUserProfile')->name('showProfile');
+    Route::get('/', 'showCurrentUser')->name('showCurrentUser')->middleware('auth:sanctum');
+    Route::post('{user}', 'updateUserProfile')->name('updateProfile')->middleware('auth:sanctum');
+});
+
 
 Route::group(['as' => 'auth.', 'controller' => AuthController::class], function () {
 

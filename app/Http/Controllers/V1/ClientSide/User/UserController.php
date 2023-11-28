@@ -17,12 +17,16 @@ class UserController extends Controller
     {
     }
 
-    public function show(Request $request, ?User $user = null)
+    public function showUserProfile(User $user)
     {
-        return new UserResource($user ?? $request->user());
+        return new UserResource($user);
+    }
+    public function showCurrentUser(Request $request)
+    {
+        return new UserResource($request->user());
     }
 
-    public function update(UserRequest $request)
+    public function updateUserProfile(UserRequest $request)
     {
         $validated = $this->clientSideService->validationData($request);
 

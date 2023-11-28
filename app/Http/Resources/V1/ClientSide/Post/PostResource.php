@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\ClientSide\Post;
 
 use App\Http\Resources\V1\ClientSide\Community\CommunityResource;
+use App\Http\Resources\V1\ClientSide\Post\Comment\PostCommentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,8 +23,10 @@ class PostResource extends JsonResource
             'image' => $this->image,
             'created_at' => $this->created_at,
 
+            'comments' => PostCommentResource::collection($this->comments),
+
             'user_info' => [
-                'user_id' => $this->user_id,
+                'user_id' => $this->author->id,
                 'user_name' => $this->author->name,
             ],
             'post_info' => [

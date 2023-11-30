@@ -10,13 +10,17 @@ use App\Services\V1\Contracts\AuthServiceInterface;
 
 class AuthService implements AuthServiceInterface
 {
-    public function createTokenForUser($user): string
+    public function createTokenForUser($user): array
     {
         static::checkAuthUser($user);
 
+        $this->destroyToken();
+
         $token = Auth::user()->createToken('accesToken')->plainTextToken;
 
-        return $token;
+        $refreshToken = Auth::user()->createToken('refreshToken')->plainTextToken;
+
+        return [$token, $refreshToken];
     }
 
     public function checkAuthUser(array $user)
@@ -27,8 +31,13 @@ class AuthService implements AuthServiceInterface
         }
     }
 
-    public function createuser($registeredData): User
+    public function createUser($registeredData): User
     {
         return User::create($registeredData);
+    }
+
+    private function destroyToken()
+    {
+        auth()->user()->tokens()->delete();
     }
 }

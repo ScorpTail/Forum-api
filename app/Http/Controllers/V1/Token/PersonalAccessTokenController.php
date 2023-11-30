@@ -11,7 +11,8 @@ use App\Services\V1\TokenServices\PersonalAccessTokenService;
 class PersonalAccessTokenController extends Controller
 {
     public function __construct(private PersonalAccessTokenService $personalAccessTokenService)
-    {}
+    {
+    }
 
     public function createToken(CreateTokenRequest $request)
     {
@@ -26,8 +27,32 @@ class PersonalAccessTokenController extends Controller
 
     public function destroyToken(Request $request)
     {
-        $request->user()->currentAccessToken()->delete;
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Token destroyed'], Response::HTTP_OK);
+    }
+
+    public function refreshToken(Request $request)
+    {
+        $user = $request->user();
+
+        $refreshToken = explode("|", $request->input('refresh_token'))[1] ?? '';
+
+        $token = optional($request->user()->tokens()->where('name', 'refreshToken')->first())->token;
+
+
+        if (!hash_equals($token, hash('sha256', $refreshToken))) {
+            return response()->json(['message' => 'Invalid resfresh token'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user->tokens()->delete();
+
+        $accessToken = $user->createToken('accesToken');
+        $refreshToken = $user->createToken('refreshToken');
+
+        return response()->json([
+            'access_token' => $accessToken->plainTextToken,
+            'refresh_token' => $refreshToken->plainTextToken,
+        ]);
     }
 }

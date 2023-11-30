@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Community;
+use App\Policies\V1\CommunityPolicy;
 use App\Policies\V1\PostPolicy;
 use App\Policies\V1\PostCommentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Comment::class => PostCommentPolicy::class,
         Post::class => PostPolicy::class,
+        Community::class => CommunityPolicy::class,
     ];
 
     /**

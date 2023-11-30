@@ -24,6 +24,8 @@ class CommunityResource extends JsonResource
             'avatar_path' => $this->avatar_path,
             'banner_path' => $this->banner_path,
             'created_at' => $this->created_at,
+
+            'subcriber_count' => $this->users->count(),
         ];
     }
 }

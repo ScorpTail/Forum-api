@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\V1\ClientSide\Post;
 
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Laravel\Sanctum\Sanctum;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Requests\ClientSide\Post\PostRequest;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
 use App\Http\Resources\V1\ClientSide\Post\PostResource;
@@ -20,9 +24,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return PostResource::collection(Post::all());
+        $posts = $this->postClientSideService->sorting($request);
+
+        return PostResource::collection($posts);
     }
 
     /**

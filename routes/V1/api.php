@@ -19,7 +19,9 @@ use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 
 Route::group(['as.' => 'user.', 'prefix' => 'user/id/', 'controller' => UserController::class], function () {
     Route::get('{user}', 'showUserProfile')->name('showProfile');
+
     Route::get('/', 'showCurrentUser')->name('showCurrentUser')->middleware('auth:sanctum');
+
     Route::post('{user}', 'updateUserProfile')->name('updateProfile')->middleware('auth:sanctum');
 });
 
@@ -48,6 +50,8 @@ Route::group([
 Route::group(['prefix' => 'personal-access-token', 'as' => 'token.', 'controller' => PersonalAccessTokenController::class], function () {
 
     Route::post('/', 'createToken')->name('createToken');
+
+    Route::post('/refresh', 'refreshToken')->name('refreshToken')->middleware(['auth:sanctum']);
 
     Route::delete('/destroy', 'destroyToken')->name('destroyToken')->middleware('auth:sanctum');
 });

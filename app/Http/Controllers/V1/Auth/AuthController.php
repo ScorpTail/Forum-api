@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Services\V1\AuthServices\AuthService;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -21,22 +22,37 @@ class AuthController extends Controller
 
         $this->authService->createuser($registeredData);
 
-        $token = $this->authService->createTokenForUser($registeredData);
+        [$token, $refreshToken] = $this->authService->createTokenForUser($registeredData);
 
-        return response()->json(['message' => 'Success registration', 'token' => $token], Response::HTTP_CREATED);
+        return response()->json(
+            [
+                'message' => 'Success registration',
+                'token' => $token, 'refreshToken' => $refreshToken,
+            ],
+            Response::HTTP_CREATED
+        );
     }
 
     public function login(LoginRequest $request)
     {
         $data = $request->validated();
 
-        $token = $this->authService->createTokenForUser($data);
+        [$token, $refreshToken] = $this->authService->createTokenForUser($data);
 
-        return response()->json(['message' => 'Success authentication', 'token' => $token], Response::HTTP_OK);
+        return response()->json(
+            [
+                'message' => 'Success registration',
+                'token' => $token, 'refreshToken' => $refreshToken,
+            ],
+            Response::HTTP_OK
+        );
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        if ($request->user()->currentAccessToken()->name == 'refreshToken') {
+            return response()->json(['message' => 'Unauthorized.'], Response::HTTP_UNAUTHORIZED);
+        }
         auth()->user()->tokens()->delete();
 
         return response()->noContent();

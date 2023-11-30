@@ -67,10 +67,12 @@ class CommunityController extends Controller
 
     public function subscribe(Community $community)
     {
-        auth()->user()->subscribed()->sync($community);
+        $this->authorize('subscribe', $community);
+        auth()->user()->subscribed()->attach($community);
     }
     public function unsubscribe(Community $community)
     {
+        $this->authorize('unsubscribe', $community);
         auth()->user()->subscribed()->detach($community);
     }
 }

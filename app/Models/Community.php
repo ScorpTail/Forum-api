@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Community extends Model
 {
@@ -37,6 +38,11 @@ class Community extends Model
     protected $casts = [
         'disclaimer' => 'boolean',
     ];
+
+    public function isSubscriber(User $user): bool
+    {
+        return $this->users->contains('id', $user->id);
+    }
 
     public function setDisclaimerAttribute($value)
     {

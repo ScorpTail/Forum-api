@@ -19,6 +19,7 @@ class CommunityResource extends JsonResource
             'community_id' => $this->id,
             'author_id' => $this->author->id,
             'name' => $this->name,
+            'description' => $this->description,
             'type' => $this->type,
             'disclaimer' => $this->disclaimer,
             'avatar_path' => $this->avatar_path,
@@ -26,6 +27,7 @@ class CommunityResource extends JsonResource
             'created_at' => $this->created_at,
 
             'subcriber_count' => $this->users->count(),
+            'post_count' => $this->posts->count(),
         ];
     }
 }

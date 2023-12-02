@@ -17,7 +17,11 @@ class CanRefreshToken
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->routeIs('token.refresh') || !$this->isRefreshTokenRequest()) {
+        if ($request->routeIs('token.refreshToken') || !$this->isRefreshTokenRequest()) {
+            return $next($request);
+        }
+
+        if ($request->routeIs('token.refreshToken') && $this->isRefreshTokenRequest()) {
             return $next($request);
         }
 

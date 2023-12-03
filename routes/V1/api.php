@@ -1,8 +1,11 @@
 <?php
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\V1\Auth\AuthController;
 use App\Http\Controllers\V1\ClientSide\User\UserController;
+use App\Http\Controllers\V1\ImageController;
 use App\Http\Controllers\V1\Token\PersonalAccessTokenController;
 use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 
@@ -16,6 +19,8 @@ use App\Http\Controllers\V1\ProviderSocialite\ProviderSocialiteController;
 | be assigned to the "api" middleware group. Make something great!
 |s
 */
+
+Route::get('/getImage/{fileName}', ImageController::class);
 
 Route::group(['as.' => 'user.', 'prefix' => 'user/id/', 'controller' => UserController::class], function () {
     Route::get('{user}', 'showUserProfile')->name('showProfile');

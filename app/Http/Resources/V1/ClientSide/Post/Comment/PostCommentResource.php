@@ -16,7 +16,10 @@ class PostCommentResource extends JsonResource
     {
         return [
             'user_id' => $this->user_id,
+            'user_name' => $this->author->name,
+            'user_avatar' => $this->author->avatar,
             'comment' => $this->comment,
+            'created_at' => $this->created_at,
 
             'comment_upvotes_count' => $this->upvotes->where('upvote', 1)->count() - $this->upvotes->where('upvote', 0)->count(),
         ];

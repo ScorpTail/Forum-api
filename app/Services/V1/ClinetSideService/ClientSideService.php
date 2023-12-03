@@ -2,6 +2,9 @@
 
 namespace App\Services\V1\ClinetSideService;
 
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
+
 class ClientSideService
 {
     public function validationData($request)
@@ -17,6 +20,19 @@ class ClientSideService
         return $validatedData;
     }
 
+    public function getImage($fileName): array
+    {
+        if (!Storage::exists("images/$fileName")) {
+            return response()->json(['error' => 'Image not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $file = Storage::get("images/$fileName");
+
+        $type = Storage::mimeType("images/$fileName");
+
+        return [$file, $type];
+    }
+
     private function getImageFromRequest($request): array
     {
         $keys = array_keys($request->allFiles());
@@ -26,6 +42,6 @@ class ClientSideService
 
     private function storeImage($image)
     {
-        return asset($image->store('post'));
+        return explode('/', $image->store('images'))[1];
     }
 }

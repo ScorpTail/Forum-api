@@ -37,6 +37,9 @@ class UserResource extends JsonResource
 
             'upvotes_count' => $this->upvotes->count(),
             'upvotes' => $this->upvotes,
+
+            'saved_count' => $this->saveds->count(),
+            'saved' => PostResource::collection($this->saveds),
         ];
     }
 }

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('about')->nullable();
 
 
-            $table->string('avatar')->default('storage/user-image/user-avatar.svg');
+            $table->string('avatar')->default('avatar.svg');
             $table->string('baner')->nullable();
             $table->json('flags')->nullable();
             $table->timestamp('email_verified_at')->nullable();

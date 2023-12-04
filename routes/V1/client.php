@@ -11,6 +11,7 @@ Route::group([
     'controller' => PostController::class
 ], function () {
     Route::post('/{post}/upvote', 'upvote')->name('upvote');
+    Route::post('/{post}/save', 'save')->name('save');
     Route::post('/{post}', 'update')->name('update');
     Route::post('/', 'store')->name('store');
 });

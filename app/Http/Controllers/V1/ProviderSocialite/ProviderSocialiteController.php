@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\ProviderSocialite;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Services\V1\ProviderSocialiteServices\ProviderSocialiteService;
+use Illuminate\Support\Facades\Auth;
 
 class ProviderSocialiteController extends Controller
 {
@@ -23,7 +24,9 @@ class ProviderSocialiteController extends Controller
 
         $user = $this->providerSocialiteService->createOrUpdateUser($provider, $socialUser);
 
-        return response()->json(['message' => 'Success', 'userToken' => $user->provider_token], Response::HTTP_OK);
+        [$token, $refreshToken] = $this->providerSocialiteService->createTokenSocialite($user);
+
+        return response()->json(['message' => 'Success', 'accessToken' => $token, 'refreshToken' => $refreshToken], Response::HTTP_OK);
 
         //dd($socialUser->getName(), $socialUser->getEmail(), $socialUser->getId(), $socialUser->getNickname(), $socialUser->getAvatar());
     }

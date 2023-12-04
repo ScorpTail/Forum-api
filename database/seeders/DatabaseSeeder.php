@@ -20,14 +20,15 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'role_id' => Role::ADMIN_ID,
             'name' => 'Admin',
-            'nickName' => 'AdminNickName',
             'email' => 'admin@gmail.com',
             'password' => 'Password123', //Password123
             'about' => fake()->text(),
         ]);
+
+        $user->provider()->create(['nickName' => 'AdminNickName']);
 
         $this->call([
             RoleSeeder::class,

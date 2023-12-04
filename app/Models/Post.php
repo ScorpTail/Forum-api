@@ -39,4 +39,9 @@ class Post extends Model
     {
         return $this->belongsTo(Community::class, 'community_id', 'id');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'saveds', 'post_id', 'user_id');
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Saved;
+use App\Models\Provider;
 use App\Models\Community;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
@@ -110,5 +112,15 @@ class User extends Authenticatable
     public function bannedUser(): HasOne
     {
         return $this->hasOne(BannedUser::class, 'user_id', 'id');
+    }
+
+    public function provider(): HasOne
+    {
+        return $this->hasOne(Provider::class, 'user_id', 'id');
+    }
+
+    public function saveds()
+    {
+        return $this->belongsToMany(Post::class, 'saveds', 'user_id', 'post_id');
     }
 }

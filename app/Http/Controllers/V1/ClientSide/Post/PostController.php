@@ -83,4 +83,16 @@ class PostController extends Controller
 
         return response()->noContent();
     }
+
+    public function save(Post $post)
+    {
+        if (auth()->user()->saveds->contains('id', $post->id)) {
+
+            auth()->user()->saveds()->detach(['id' => $post->id]);
+        } else {
+            auth()->user()->saveds()->attach(['id' => $post->id]);
+        }
+
+        return response()->json(['message' => 'Success'], Response::HTTP_ACCEPTED);
+    }
 }

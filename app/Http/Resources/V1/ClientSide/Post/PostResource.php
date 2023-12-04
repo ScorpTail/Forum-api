@@ -23,6 +23,7 @@ class PostResource extends JsonResource
             'image' => $this->image,
             'created_at' => $this->created_at,
 
+            'comments_count' => PostCommentResource::collection($this->comments)->count(),
             'comments' => PostCommentResource::collection($this->comments),
 
             'user_info' => [

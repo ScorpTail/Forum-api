@@ -78,9 +78,9 @@ class PostClientSideService implements PostServiceInterface
 
     private function checkToken($request): Collection|null
     {
-        if ($bearerToken = $request->bearerToken()) {
+        $bearerToken = $request->bearerToken();
 
-            $accessToken = PersonalAccessToken::findToken($bearerToken);
+        if ($accessToken = PersonalAccessToken::findToken($bearerToken)) {
 
             if ($accessToken && $accessToken->name !== 'refreshToken') {
                 $user = $accessToken->tokenable;

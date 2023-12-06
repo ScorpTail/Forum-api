@@ -35,6 +35,8 @@ class PostResource extends JsonResource
                 'post_comments_count' => $this->comments->count(),
             ],
             'community_info' => new CommunityResource($this->community),
+
+            'user_isSubscribet' => $this->community->isSubscriber($request->bearerToken()),
         ];
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class Community extends Model
 {
@@ -39,9 +40,18 @@ class Community extends Model
         'disclaimer' => 'boolean',
     ];
 
-    public function isSubscriber(User $user): bool
+    public function isSubscriber(User|null|string $user): bool
     {
-        return $this->users->contains('id', $user->id);
+
+        if ($user instanceof User) {
+            return $this->users->contains('id', $user->id);
+        }
+
+        if ($user = PersonalAccessToken::findToken($user)) {
+            return $this->users->contains('id', $user->tokenable->id);
+        }
+
+        return false;
     }
 
     public function setDisclaimerAttribute($value)

@@ -10,6 +10,10 @@ use App\Services\V1\Contracts\ClientSideContracts\Post\PostComment\PostCommentSe
 
 class PostCommentClientService implements PostCommentServiceInterface
 {
+
+    public function __construct(private PostClientSideService $service)
+    {
+    }
     public function storeCommnet($request, Post $post)
     {
         $validated = $request->validated();
@@ -33,8 +37,6 @@ class PostCommentClientService implements PostCommentServiceInterface
 
     public function upvoteForComment(UpvoteRequest $request, Comment $comment)
     {
-        $upvote = $request->validated();
-
-        $comment->upvotes()->create($upvote);
+        $this->service->upvote($request, $comment);
     }
 }

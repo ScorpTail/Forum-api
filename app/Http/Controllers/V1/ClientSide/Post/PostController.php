@@ -77,9 +77,7 @@ class PostController extends Controller
 
     public function upvote(UpvoteRequest $request, Post $post)
     {
-        $this->authorize('upvote', $post);
-
-        $this->postClientSideService->upvotePost($request, $post);
+        $this->postClientSideService->upvote($request, $post);
 
         return response()->noContent();
     }

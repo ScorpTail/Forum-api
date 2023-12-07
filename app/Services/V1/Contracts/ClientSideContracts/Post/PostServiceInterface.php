@@ -3,6 +3,7 @@
 namespace App\Services\V1\Contracts\ClientSideContracts\Post;
 
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Model;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
 
 interface PostServiceInterface
@@ -13,5 +14,5 @@ interface PostServiceInterface
 
     public function destroyPost(Post $post);
 
-    public function upvotePost(UpvoteRequest $request, Post $post);
+    public function upvote(UpvoteRequest $request, Model $post);
 }

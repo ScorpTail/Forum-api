@@ -61,8 +61,6 @@ class PostCommentController extends Controller
 
     public function upvote(UpvoteRequest $request, Post $post, Comment $comment)
     {
-        $this->authorize('upvote', $comment);
-
         $this->postCommentClientService->upvoteForComment($request, $comment);
 
         return response()->noContent();

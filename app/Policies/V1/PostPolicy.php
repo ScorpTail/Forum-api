@@ -31,9 +31,4 @@ class PostPolicy
     {
         return $user->id === $post->author->id || $user->isAdmin();
     }
-
-    public function upvote(User $user, Post $post): bool
-    {
-        return !$post->upvotes->pluck('user_id')->contains($user->id);
-    }
 }

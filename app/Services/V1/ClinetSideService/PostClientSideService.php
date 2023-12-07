@@ -6,6 +6,7 @@ use App\Models\Post;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
 use App\Services\V1\Contracts\ClientSideContracts\Post\PostServiceInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class PostClientSideService implements PostServiceInterface
@@ -39,11 +40,18 @@ class PostClientSideService implements PostServiceInterface
         return true;
     }
 
-    public function upvotePost(UpvoteRequest $request, Post $post)
+    public function upvote(UpvoteRequest $request, Model $model)
     {
         $upvote = $request->validated();
 
-        $post->upvotes()->create($upvote);
+        if ($model->upvotes->contains('user_id', $upvote['user_id'])) {
+            if ($model->upvotes()->where('user_id', $upvote['user_id'])->where('upvote', $upvote['upvote'])->exists()) {
+                $model->upvotes()->where('user_id', $upvote['user_id'])->delete();
+            }
+            $model->upvotes()->update($upvote);
+        } else {
+            $model->upvotes()->create($upvote);
+        }
 
         return true;
     }

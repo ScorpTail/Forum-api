@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -20,6 +21,18 @@ class Post extends Model
         'description',
         'image',
     ];
+
+    public function hasUpvote(?string $user): ?bool
+    {
+        $tokenable = optional(PersonalAccessToken::findToken($user))->tokenable;
+
+        if (!$tokenable || !$this->upvotes->contains('user_id', $tokenable->id)) {
+            return null;
+        }
+
+        return $this->upvotes->where('user_id', $tokenable->id)->pluck('upvote')->first();
+    }
+
 
     public function author(): BelongsTo
     {

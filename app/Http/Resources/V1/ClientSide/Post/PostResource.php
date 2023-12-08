@@ -37,6 +37,7 @@ class PostResource extends JsonResource
             'community_info' => new CommunityResource($this->community),
 
             'user_isSubscribet' => $this->community->isSubscriber($request->bearerToken()),
+            'user_upvote' => $this->hasUpvote($request->bearerToken()),
         ];
     }
 }

@@ -22,6 +22,7 @@ class PostCommentResource extends JsonResource
             'created_at' => $this->created_at,
 
             'comment_upvotes_count' => $this->upvotes->where('upvote', 1)->count() - $this->upvotes->where('upvote', 0)->count(),
+            'user_comment_upvote' => $this->hasUpvote($request->bearerToken()),
         ];
     }
 }

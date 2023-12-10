@@ -5,6 +5,7 @@ namespace App\Services\V1\ClinetSideService;
 use App\Models\Post;
 use Laravel\Sanctum\PersonalAccessToken;
 use App\Http\Requests\ClientSide\Post\UpvoteRequest;
+use App\Models\Comment;
 use App\Services\V1\Contracts\ClientSideContracts\Post\PostServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -40,7 +41,7 @@ class PostClientSideService implements PostServiceInterface
         return true;
     }
 
-    public function upvote(UpvoteRequest $request, Model $model)
+    public function upvote(UpvoteRequest $request, Model $model): Post|Comment
     {
         $upvote = $request->validated();
 
@@ -53,7 +54,7 @@ class PostClientSideService implements PostServiceInterface
             $model->upvotes()->create($upvote);
         }
 
-        return true;
+        return $model->refresh();
     }
 
     public function sorting($request)

@@ -79,7 +79,9 @@ class PostController extends Controller
     {
         $this->postClientSideService->upvote($request, $post);
 
-        return response()->noContent();
+        $upvotes = $post->upvotes->where('upvote', 1)->count() - $post->upvotes->where('upvote', 0)->count();
+
+        return response()->json(['message' => 'Success', 'post_upvotes_count' => $upvotes]);
     }
 
     public function save(Post $post)

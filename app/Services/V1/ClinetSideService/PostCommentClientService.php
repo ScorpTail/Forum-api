@@ -35,8 +35,8 @@ class PostCommentClientService implements PostCommentServiceInterface
         $comment->delete();
     }
 
-    public function upvoteForComment(UpvoteRequest $request, Comment $comment)
+    public function upvoteForComment(UpvoteRequest $request, Comment $comment): Post|Comment
     {
-        $this->service->upvote($request, $comment);
+        return $this->service->upvote($request, $comment);
     }
 }

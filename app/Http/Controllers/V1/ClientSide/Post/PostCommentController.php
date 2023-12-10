@@ -63,6 +63,8 @@ class PostCommentController extends Controller
     {
         $this->postCommentClientService->upvoteForComment($request, $comment);
 
-        return response()->noContent();
+        $upvotes = $comment->upvotes->where('upvote', 1)->count() - $comment->upvotes->where('upvote', 0)->count();
+
+        return response()->json(['message' => 'Success', 'comment_upvotes_count' => $upvotes]);
     }
 }

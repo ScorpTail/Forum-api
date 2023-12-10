@@ -49,7 +49,7 @@ class PostClientSideService implements PostServiceInterface
             if ($model->upvotes()->where('user_id', $upvote['user_id'])->where('upvote', $upvote['upvote'])->exists()) {
                 $model->upvotes()->where('user_id', $upvote['user_id'])->delete();
             }
-            $model->upvotes()->update($upvote);
+            $model->upvotes()->where('user_id', $upvote['user_id'])->update($upvote);
         } else {
             $model->upvotes()->create($upvote);
         }
